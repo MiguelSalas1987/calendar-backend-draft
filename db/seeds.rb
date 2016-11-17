@@ -1,17 +1,50 @@
 
-given_date= Date.parse("2016-11-15 21:57:50 -0400")
+given_date= Date.parse("2016-11-15 13:00:00 -0400")
 
-def create_booking(date, timeInit, hours, name, description)
+def create_booking(date, name, description, beginning_hour, ending_hour)
 
-Booking.create(date:        date,
-               timeInit:    timeInit,
-               hours:       hours,
-               description: description,
-               name: name)
+  Booking.create(date:        date,
+                 name: name,
+                 description: description,
+                 beginning_hour: beginning_hour,
+                 ending_hour: ending_hour)
 end
 
-create_booking(given_date, given_date.noon, 1, "Miguel", "programar" )
-create_booking(given_date.next_day, given_date.noon, 1, "Mariana", "programar" )
-create_booking(given_date.next_week, given_date.noon, 1, "Nestor", "Tocar guitarra" )
-create_booking(given_date.next_week(:friday), given_date.noon, 1, "Daniel", "Reunion de trabajo" )
-create_booking(given_date.next_week.next_week(:tuesday), given_date.noon, 1, "Miguel", "Estudiar" )
+create_booking(given_date,
+               "Miguel",
+               "programar",
+               given_date.noon,
+               given_date.noon + 2.hours)
+
+create_booking(given_date,
+               "Mariana",
+               "programar",
+               given_date.noon + 2.hours,
+               given_date.noon + 4.hours)
+
+create_booking(given_date.next_day,
+               "Mariana",
+               "programar",
+               given_date.noon.next_day + 2.hours,
+               given_date.next_day + 4.hours)
+
+create_booking(given_date.next_week,
+               "Mariana",
+               "Estudiar",
+               given_date.next_week + 2.hours,
+               given_date.next_week + 4.hours)
+
+create_booking(given_date.next_week(:friday),
+               "Mariana",
+               "Estudiar",
+               given_date.next_week(:friday) + 2.hours,
+               given_date.next_week(:friday) + 4.hours)
+
+
+create_booking(given_date.next_week(:tuesday),
+               "Mariana",
+               "Estudiar",
+               given_date.next_week(:tuesday) + 2.hours,
+               given_date.next_week(:tuesday) + 4.hours)
+
+

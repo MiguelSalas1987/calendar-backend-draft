@@ -15,7 +15,13 @@ class BookingsController < ApplicationController
 
   # POST /bookings
   def create
-    @booking = Booking.new(booking_params)
+    my_params = booking_params
+    # parse the dates that come in string format
+    my_params[:beginning_hour] = my_params[:beginning_hour].to_datetime
+    my_params[:ending_hour]    = my_params[:ending_hour].to_datetime
+    my_params[:date]           = my_params[:beginning_hour].to_date
+
+    @booking = Booking.new(my_params)
 
     if @booking.save
       render json: @booking, status: :created, location: @booking
@@ -50,10 +56,7 @@ class BookingsController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def booking_params
-      params.require(:booking).permit(:date, :timeInit, :hours, :name, :description)
-    end
-
-    def seach_params
-      params.permit(:date)
+      params.permit(:date, :name, :description,
+                    :beginning_hour, :ending_hour)
     end
 end

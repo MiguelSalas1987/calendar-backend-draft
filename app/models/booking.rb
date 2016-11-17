@@ -10,12 +10,12 @@ class Booking < ApplicationRecord
 
     bookings = bookings_data.map do |booking|
       {
-        date:        booking.date,
-        time:        booking.timeInit,
-        hours:       booking.hours,
-        name:        booking.name,
-        description: booking.description,
-        id:          booking.id
+        date:           booking.date,
+        name:           booking.name,
+        description:    booking.description,
+        beginning_hour: booking.beginning_hour,
+        ending_hour:    booking.ending_hour,
+        id:             booking.id
       }
     end
     bookings
