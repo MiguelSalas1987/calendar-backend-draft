@@ -1,5 +1,5 @@
 
-given_date= Date.parse("2016-11-15 13:00:00 -0400")
+given_date= DateTime.parse("2016-11-15 13:00:00 -0400")
 
 def create_booking(date, name, description, beginning_hour, ending_hour)
 

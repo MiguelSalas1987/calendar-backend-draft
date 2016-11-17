@@ -19,12 +19,22 @@ class BookingsController < ApplicationController
     # parse the dates that come in string format
     my_params[:beginning_hour] = my_params[:beginning_hour].to_datetime
     my_params[:ending_hour]    = my_params[:ending_hour].to_datetime
-    my_params[:date]           = my_params[:beginning_hour].to_date
+    my_params[:date]           = my_params[:beginning_hour].to_datetime
 
     @booking = Booking.new(my_params)
 
     if @booking.save
-      render json: @booking, status: :created, location: @booking
+      # change the time in the db to localtime before render
+      response = {
+        name:           @booking.name,
+        description:    @booking.description,
+        date:           @booking.date.localtime,
+        beginning_hour: @booking.beginning_hour.localtime,
+        ending_hour:    @booking.ending_hour.localtime,
+        id:             @booking.id
+      }
+
+      render json: response
     else
       render json: @booking.errors, status: :unprocessable_entity
     end
